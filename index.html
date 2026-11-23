@@ -631,7 +631,7 @@ nav.scrolled .logo{font-size:17px}
 /* sala de troféus: silhuetas brancas em carrossel */
 .trophy-shelf{position:relative;margin:34px -24px 6px;padding:40px 0 0;overflow:hidden;
   -webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.shelf-track{display:flex;align-items:flex-end;gap:46px;width:max-content;height:330px;padding:0 40px;animation:shelf 60s linear infinite}
+.shelf-track{display:flex;align-items:flex-end;gap:46px;width:max-content;height:330px;padding:0 40px 58px;will-change:transform}
 .trophy-shelf.paused .shelf-track{animation-play-state:paused}
 @keyframes shelf{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 .trophy{position:relative;flex:0 0 auto;height:170px;cursor:pointer;border:0;background:none;padding:0;transition:height .45s cubic-bezier(.2,.8,.2,1)}
@@ -726,6 +726,113 @@ nav.scrolled .logo{font-size:17px}
 .lb.trophy-mode .cap,.lb.trophy-mode .thumbs{opacity:.92}
 
 
+
+/* animação da logo LM41: LM → 41 → asas */
+.lmanim path{transform-box:fill-box;transform-origin:center}
+.lmanim .n41{opacity:0}
+.lmanim.go .lmL{animation:lmLA 4.2s cubic-bezier(.2,.8,.2,1) both}
+.lmanim.go .lmM{animation:lmMA 4.2s cubic-bezier(.2,.8,.2,1) both}
+.lmanim.go .plate{animation:plA 4.2s ease-out both}
+.lmanim.go .silg{animation:silA 4.2s cubic-bezier(.3,.7,.3,1) both}
+.lmanim.go .n41{animation:n41A 1.8s 4.1s ease-in-out both}
+.lmanim.go .n41g{animation:n41G 1.8s 4.1s ease-in-out both}
+.lmanim.go .wl{transform-origin:right center;animation:wlA 4.2s cubic-bezier(.2,.9,.25,1.2) both}
+.lmanim.go .wr{transform-origin:left center;animation:wrA 4.2s cubic-bezier(.2,.9,.25,1.2) both}
+/* 1) LM verde sem contorno  2) só o 41 branco  3) tudo junto + asas */
+@keyframes silA{0%{clip-path:circle(0% at 50% 50%)}28%{clip-path:circle(75% at 50% 50%)}100%{clip-path:circle(75% at 50% 50%)}}
+@keyframes lmLA{0%,6%{opacity:0;transform:translateX(-65%);stroke-opacity:0}14%{opacity:1}32%{transform:translateX(2%)}37%{transform:none}42%{stroke-opacity:0}50%,100%{opacity:1;stroke-opacity:1;transform:none}}
+@keyframes lmMA{0%,6%{opacity:0;transform:translateX(65%);stroke-opacity:0}14%{opacity:1}32%{transform:translateX(-2%)}37%{transform:none}42%{stroke-opacity:0}50%,100%{opacity:1;stroke-opacity:1;transform:none}}
+@keyframes plA{0%,40%{opacity:0}50%,100%{opacity:1}}
+@keyframes n41A{0%{opacity:0;fill:#fff}25%{opacity:1;fill:#b8ffa6}45%{opacity:.2;fill:#fff}70%{opacity:1;fill:#b8ffa6}100%{opacity:0;fill:#fff}}
+@keyframes n41G{0%,100%{filter:none}25%{filter:drop-shadow(0 0 14px rgba(57,255,20,.95)) drop-shadow(0 0 4px #fff)}45%{filter:none}70%{filter:drop-shadow(0 0 20px rgba(57,255,20,1)) drop-shadow(0 0 6px #fff)}}
+@keyframes wlA{0%,48%{opacity:0;transform:translateX(18%) scaleX(.3)}72%{opacity:1;transform:translateX(-3%) scaleX(1.06)}84%,100%{opacity:1;transform:none}}
+@keyframes wrA{0%,48%{opacity:0;transform:translateX(-18%) scaleX(.3)}72%{opacity:1;transform:translateX(3%) scaleX(1.06)}84%,100%{opacity:1;transform:none}}
+.lmanim{cursor:pointer}
+@media (prefers-reduced-motion:reduce){.lmanim.go path{animation:none!important}}
+
+
+.lmwrap{position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;aspect-ratio:2/1;width:100%;max-width:420px;margin-inline:auto}
+.lmwrap .lmlogo{width:100%}
+.lmanim.hide{opacity:0}
+.lmanim{transition:opacity .5s}
+.lmtype{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;opacity:0;pointer-events:none;transition:opacity .5s;line-height:1}
+.lmtype.on{opacity:1}
+.lmtype .tx{display:inline-flex;align-items:center}
+.lmtype b{font-weight:400;letter-spacing:.02em;display:inline-block;opacity:0;transform:translateY(12%);filter:blur(6px);transition:opacity .3s ease,transform .35s ease,filter .3s ease}
+.lmtype b.in{opacity:1;transform:none;filter:none}
+.lmtype b.in.sw{opacity:.25;filter:blur(3px);transform:scale(.96)}
+.lmtype b.g{color:var(--neon);text-shadow:0 0 18px rgba(57,255,20,.45)}
+.lmtype .nmbox{display:flex;flex-direction:column;align-items:flex-start;line-height:1.02}
+.lmtype .nl{display:flex;align-items:center;min-height:1em}
+.lmtype b.nm{font-family:Anton,sans-serif;color:#fff;transition:opacity .15s,transform .2s,filter .15s}
+.lmtype b.w{color:#fff;text-shadow:0 0 18px rgba(57,255,20,.6)}
+.lmtype .cur{display:inline-block;width:.08em;height:.9em;margin-left:.06em;background:var(--neon);animation:curB 1.05s ease-in-out infinite}
+@keyframes curB{0%,45%{opacity:1}55%,95%{opacity:0}100%{opacity:1}}
+
+
+.lb .cap.hasleg{white-space:normal;border-radius:16px;max-width:min(760px,88vw);padding:10px 20px}
+.lb .cap .leg{display:block;font-style:normal;font-size:14.5px;line-height:1.4;color:#fff;margin-top:4px}
+@media (max-width:700px){.lb .cap{border-radius:14px;max-width:88vw;padding:8px 14px}.lb .cap.hasleg{width:88vw;bottom:calc(5vh + 70px)}.lb .cap.hasleg b{display:block;line-height:1.2}.lb .cap.hasleg span{margin-left:0}.lb .cap b{font-size:14px}.lb .cap span{font-size:11.5px;margin-left:6px}.lb .cap .leg{font-size:13px}}
+
+
+/* trilho mecânico por competição */
+.trophy-shelf{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.trophy-shelf.dragging{cursor:grabbing}
+.trophy-shelf.dragging .trophy{pointer-events:none}
+.trophy img{-webkit-user-drag:none}
+.trophy .rl{position:absolute;left:-23px;right:-23px;bottom:-46px;height:8px;pointer-events:none;
+  background:linear-gradient(180deg,var(--c) 0 3px,transparent 3px),repeating-linear-gradient(90deg,rgba(255,255,255,.28) 0 2px,transparent 2px 9px),linear-gradient(180deg,#2a3650,#121b2c)}
+.trophy .rl.rs{left:-6px}
+.trophy .rl.re{right:-6px}
+.trophy .rl.rs::before,.trophy .rl.re::after{content:"";position:absolute;top:-6px;width:4px;height:20px;border-radius:2px;background:var(--c)}
+.trophy .rl.rs::before{left:0}.trophy .rl.re::after{right:0}
+.trophy .rl em{position:absolute;left:10px;top:13px;font-style:normal;font-family:var(--cond);font-weight:700;font-size:12px;line-height:1.15;letter-spacing:.1em;text-transform:uppercase;color:var(--c);white-space:nowrap;display:flex;justify-content:flex-end}
+.trophy-shelf .shelf-floor{opacity:.35}
+@media (max-width:980px){.shelf-track{gap:30px}.trophy .rl{left:-15px;right:-15px;bottom:-42px}.trophy .rl em{font-size:10.5px}}
+
+
+.lb .lbsnd{position:absolute;bottom:calc(5vh + 130px);right:calc(5vw + 10px);z-index:5;display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;background:rgba(4,10,20,.78);backdrop-filter:blur(6px);color:#fff;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer}
+.lb .lbsnd.on{background:var(--neon);color:var(--dark)}
+.lb .lbsnd[hidden]{display:none}
+.lb .lbsnd svg{width:16px;height:16px;fill:currentColor}
+@media (max-width:700px){.lb .lbsnd{bottom:auto;top:calc(5vh + 52px);right:calc(3vw + 6px);padding:8px 12px}}
+
+
+/* book: descrição e miniaturas no topo (não conflitam com os controles do vídeo); zoom embaixo */
+.lb:not(.trophy-mode) .thumbs{top:calc(5vh + 10px);bottom:auto;max-width:min(560px,62vw);z-index:4}
+.lb:not(.trophy-mode) .cap{top:calc(5vh + 74px);bottom:auto;z-index:4}
+.lb:not(.trophy-mode) .lbzoom{top:auto;bottom:calc(5vh + 14px)}
+.lb.vid .lbzoom{display:none}
+.lb .lbsnd{bottom:calc(5vh + 70px)}
+@media (max-width:700px){
+  .lb:not(.trophy-mode) .thumbs{top:calc(5vh + 52px);max-width:92vw}
+  .lb:not(.trophy-mode) .cap{top:calc(5vh + 112px)}
+  .lb:not(.trophy-mode) .cap.hasleg{bottom:auto}
+  .lb .lbsnd{top:auto;bottom:calc(5vh + 70px);right:calc(3vw + 6px)}
+}
+
+
+/* marcador "+" pulsante (chegada de reforço) */
+.titem.plus::before{width:28px;height:28px;margin-top:-6px;margin-right:-6px;border:2px solid var(--neon);border-radius:50%;box-shadow:0 0 12px rgba(57,255,20,.5);transform:none;box-sizing:border-box;background:linear-gradient(#fff,#fff) center/14px 4px no-repeat,linear-gradient(#fff,#fff) center/4px 14px no-repeat,#0A1628;z-index:2;animation:plusP 1.6s ease-in-out infinite}
+.titem.plus.r::before{margin-right:0;margin-left:-6px}
+.titem.plus::after{content:"";position:absolute;top:4px;width:28px;height:28px;border-radius:50%;background:rgba(57,255,20,.45);animation:plusR 1.6s ease-out infinite;pointer-events:none}
+.titem.plus.l::after{right:-15px}.titem.plus.r::after{left:-15px}
+.titem.mk-play::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 12'%3E%3Cpath d='M1 1l8 5-8 5z' fill='%23fff' stroke='%23fff' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 56% 50%/10px 12px no-repeat,#0A1628}
+.titem.mk-ball::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6l59.2 0c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z' fill='%23fff'/%3E%3C/svg%3E") center/16px 16px no-repeat,#0A1628}
+.titem.mk-ball::before{animation:none}.titem.mk-ball::after{display:none}
+@keyframes plusP{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@keyframes plusR{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+@media (max-width:980px){.titem.plus.l::after,.titem.plus.r::after{left:-5px;right:auto}.titem.plus.l::before{margin-left:-6px;margin-right:0}}
+@media (prefers-reduced-motion:reduce){.titem.plus::before,.titem.plus::after{animation:none}}
+
+
+.tl::before{bottom:var(--tlEnd,0px)}
+
+.tl-prev{position:relative;display:flex;justify-content:center;padding:10px 0 0;z-index:2}
+.tl-prev button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 26px;border-radius:999px;border:1.5px solid var(--neon);background:#0A1628;color:#fff;cursor:pointer;font-family:var(--disp);font-size:28px;line-height:1;box-shadow:0 0 0 4px rgba(10,22,40,1),0 0 18px rgba(57,255,20,.35);transition:.25s}
+.tl-prev button small{font-family:Inter,sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tl-prev button:hover{background:var(--neon);color:var(--dark)}.tl-prev button:hover small{color:var(--dark)}
+@media (max-width:980px){.tl-prev{justify-content:flex-start;padding-left:0}.tl-prev button{padding:8px 18px;font-size:22px;margin-left:-14px}}
 /* momento ao vivo */
 .livetag .dots{display:inline-flex;margin-left:1px}
 .livetag .dots b{animation:ldots 1.4s infinite;opacity:0}
@@ -831,7 +938,7 @@ nav.scrolled .logo{font-size:17px}
       <p class="tag">De pilotar abaixo de um minuto à disputa entre os melhores do Brasil.</p>
       <div class="ctas">
         <a href="#patrocinio" class="btn btn-neon">Quero patrocinar <svg class="fa" aria-hidden="true" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></a>
-        <a href="#piloto" class="btn btn-ghost"><svg class="fa" aria-hidden="true" viewBox="0 0 576 512"><path d="M256 32c-17.7 0-32 14.3-32 32l0 2.3 0 99.6c0 5.6-4.5 10.1-10.1 10.1c-3.6 0-7-1.9-8.8-5.1L157.1 87C83 123.5 32 199.8 32 288l0 64 512 0 0-66.4c-.9-87.2-51.7-162.4-125.1-198.6l-48 83.9c-1.8 3.2-5.2 5.1-8.8 5.1c-5.6 0-10.1-4.5-10.1-10.1l0-99.6 0-2.3c0-17.7-14.3-32-32-32l-64 0zM16.6 384C7.4 384 0 391.4 0 400.6c0 4.7 2 9.2 5.8 11.9C27.5 428.4 111.8 480 288 480s260.5-51.6 282.2-67.5c3.8-2.8 5.8-7.2 5.8-11.9c0-9.2-7.4-16.6-16.6-16.6L16.6 384z"/></svg> Conheça a história</a>
+        <a href="#piloto" class="btn btn-ghost"><svg class="fa" aria-hidden="true" viewBox="0 0 576 512"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5l0-370.3c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11L304 456c0 11.4 11.7 19.3 22.4 15.5z"/></svg> Conheça a história</a>
       </div>
       <div class="ht-info" id="htInfo" aria-live="polite"></div>
     </div>
@@ -863,12 +970,12 @@ nav.scrolled .logo{font-size:17px}
     <h2 class="display reveal">Um minuto<br><span class="neon">que mudou tudo</span></h2>
     <div class="story">
       <div class="photo reveal">
-        <img src="media/fotos/box-capacete.jpg" alt="Lucas Menegetti no box segurando o capacete">
+        <img src="media/fotos/box-capacete.jpg" alt="Lucas Menegetti no box segurando o capacete" style="object-position:50% 6%">
         <div class="credit">Texto base: matéria da Revista Podium nº 24</div>
       </div>
       <div>
         <div class="chapter reveal"><div class="y">Antes do kart</div><h3>Nasceu competidor</h3>
-          <p>Antes de acelerar, Lucas já chamava atenção pela facilidade em aprender esportes e entender estratégia. Passou pela natação e pelo tênis e encontrou no futebol seu primeiro ambiente de competição, onde foi campeão e artilheiro.</p></div>
+          <p>Lucas tem <b class="idade" data-nasc="2018-02-16">8</b> anos. Antes de acelerar, já chamava atenção pela facilidade em aprender esportes e entender estratégia. Passou pela natação e pelo tênis e encontrou no futebol seu primeiro ambiente de competição, onde foi campeão e artilheiro.</p></div>
         <div class="chapter reveal"><div class="y">2022 – Jan/2025</div><h3>O olho brilhou na pista</h3>
           <p>Numa etapa de drift no kartódromo de Palmas, ele não tirava os olhos dos carros. No primeiro sábado de janeiro de 2025 veio a primeira volta de verdade. Depois de algumas voltas acompanhadas, pediu para andar sozinho. Saiu da pista querendo mais.</p></div>
         <div class="chapter reveal"><div class="y">2025</div><h3>A meta do minuto</h3>
@@ -890,14 +997,14 @@ nav.scrolled .logo{font-size:17px}
     </div>
 
     <div class="logo-story reveal">
-      <div><svg class="lmlogo" role="img" aria-label="Logo LM41 de Lucas Menegetti" viewBox="0 0 1666 572" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1191.02 12.2578L1196.21 28.2207L1210.95 73.6045V159.313C1210.95 173.748 1222.65 185.449 1237.08 185.449H1501.92C1585.64 185.449 1653.51 117.582 1653.51 33.8633V12.2578H1191.02Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
-<path d="M1237.08 186.495C1222.65 186.495 1210.95 198.195 1210.95 212.629V315.429H1386.49C1447.35 315.429 1496.69 266.089 1496.69 205.225V186.495H1237.08Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
-<path d="M454.758 12.2578V159.313C454.758 173.748 443.057 185.449 428.623 185.449H163.783C80.0647 185.449 12.1975 117.582 12.1973 33.8633V12.2578H454.758Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
-<path d="M428.622 186.495C443.056 186.495 454.758 198.195 454.758 212.629V315.429H279.214C218.35 315.429 169.01 266.089 169.01 205.225V186.495H428.622Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
-<path d="M466.954 0H1198.75V529.68C1198.75 552.774 1180.03 571.496 1156.93 571.496H508.771C485.676 571.496 466.954 552.774 466.954 529.68V0Z" fill="white"/>
-<path d="M543.618 12.2578C565.751 12.2579 583.692 30.1996 583.692 52.332V430.426H792.776V559.361H508.771C478.94 559.361 454.758 535.178 454.758 505.348V12.2578H543.618ZM909.516 12.2578C920.352 12.2579 930.181 16.5616 937.395 23.5498C944.608 16.5612 954.438 12.2579 965.274 12.2578H1156.93C1186.76 12.2579 1210.95 36.4408 1210.95 66.2715V505.348C1210.95 535.178 1186.76 559.361 1156.93 559.361H1082.01V156.874C1082.01 148.214 1074.99 141.193 1066.33 141.193H967.014V221.342H1001.86V559.361H872.926V156.874C872.926 148.214 865.905 141.193 857.244 141.193H792.776V385.299H663.842V12.2578H909.516Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
-</svg></div>
+      <div><svg class="lmlogo lmanim" role="img" aria-label="Logo LM41 de Lucas Menegetti" viewBox="0 0 1666 572" fill="none" xmlns="http://www.w3.org/2000/svg"><g class="silg"><path d="M466.954 0H1198.75V529.68C1198.75 552.774 1180.03 571.496 1156.93 571.496H508.771C485.676 571.496 466.954 552.774 466.954 529.68V0Z" fill="#fff"/><path d="M1191.02 12.2578L1196.21 28.2207L1210.95 73.6045V159.313C1210.95 173.748 1222.65 185.449 1237.08 185.449H1501.92C1585.64 185.449 1653.51 117.582 1653.51 33.8633V12.2578H1191.02Z" fill="#fff" stroke="#fff" stroke-width="24.3931" stroke-linejoin="round"/><path d="M1237.08 186.495C1222.65 186.495 1210.95 198.195 1210.95 212.629V315.429H1386.49C1447.35 315.429 1496.69 266.089 1496.69 205.225V186.495H1237.08Z" fill="#fff" stroke="#fff" stroke-width="24.3931" stroke-linejoin="round"/><path d="M454.758 12.2578V159.313C454.758 173.748 443.057 185.449 428.623 185.449H163.783C80.0647 185.449 12.1975 117.582 12.1973 33.8633V12.2578H454.758Z" fill="#fff" stroke="#fff" stroke-width="24.3931" stroke-linejoin="round"/><path d="M428.622 186.495C443.056 186.495 454.758 198.195 454.758 212.629V315.429H279.214C218.35 315.429 169.01 266.089 169.01 205.225V186.495H428.622Z" fill="#fff" stroke="#fff" stroke-width="24.3931" stroke-linejoin="round"/><path d="M543.618 12.2578C565.751 12.2579 583.692 30.1996 583.692 52.332V430.426H792.776V559.361H508.771C478.94 559.361 454.758 535.178 454.758 505.348V12.2578H543.618Z" fill="#fff" stroke="#fff" stroke-width="24.3931" stroke-linejoin="round"/><path d="M909.516 12.2578C920.352 12.2579 930.181 16.5616 937.395 23.5498C944.608 16.5612 954.438 12.2579 965.274 12.2578H1156.93C1186.76 12.2579 1210.95 36.4408 1210.95 66.2715V505.348C1210.95 535.178 1186.76 559.361 1156.93 559.361H1082.01V156.874C1082.01 148.214 1074.99 141.193 1066.33 141.193H967.014V221.342H1001.86V559.361H872.926V156.874C872.926 148.214 865.905 141.193 857.244 141.193H792.776V385.299H663.842V12.2578H909.516Z" fill="#fff" stroke="#fff" stroke-width="24.3931" stroke-linejoin="round"/></g>
+<path class="wr" d="M1191.02 12.2578L1196.21 28.2207L1210.95 73.6045V159.313C1210.95 173.748 1222.65 185.449 1237.08 185.449H1501.92C1585.64 185.449 1653.51 117.582 1653.51 33.8633V12.2578H1191.02Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
+<path class="wr" d="M1237.08 186.495C1222.65 186.495 1210.95 198.195 1210.95 212.629V315.429H1386.49C1447.35 315.429 1496.69 266.089 1496.69 205.225V186.495H1237.08Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
+<path class="wl" d="M454.758 12.2578V159.313C454.758 173.748 443.057 185.449 428.623 185.449H163.783C80.0647 185.449 12.1975 117.582 12.1973 33.8633V12.2578H454.758Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
+<path class="wl" d="M428.622 186.495C443.056 186.495 454.758 198.195 454.758 212.629V315.429H279.214C218.35 315.429 169.01 266.089 169.01 205.225V186.495H428.622Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
+<path class="plate" d="M466.954 0H1198.75V529.68C1198.75 552.774 1180.03 571.496 1156.93 571.496H508.771C485.676 571.496 466.954 552.774 466.954 529.68V0Z" fill="white"/>
+<path class="lm lmL" d="M543.618 12.2578C565.751 12.2579 583.692 30.1996 583.692 52.332V430.426H792.776V559.361H508.771C478.94 559.361 454.758 535.178 454.758 505.348V12.2578H543.618Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/><path class="lm lmM" d="M909.516 12.2578C920.352 12.2579 930.181 16.5616 937.395 23.5498C944.608 16.5612 954.438 12.2579 965.274 12.2578H1156.93C1186.76 12.2579 1210.95 36.4408 1210.95 66.2715V505.348C1210.95 535.178 1186.76 559.361 1156.93 559.361H1082.01V156.874C1082.01 148.214 1074.99 141.193 1066.33 141.193H967.014V221.342H1001.86V559.361H872.926V156.874C872.926 148.214 865.905 141.193 857.244 141.193H792.776V385.299H663.842V12.2578H909.516Z" fill="#11FE00" stroke="white" stroke-width="24.3931"/>
+<defs><mask id="m41" maskUnits="userSpaceOnUse" x="0" y="0" width="1666" height="572"><rect width="1666" height="572" fill="#fff"/><path d="M543.618 12.2578C565.751 12.2579 583.692 30.1996 583.692 52.332V430.426H792.776V559.361H508.771C478.94 559.361 454.758 535.178 454.758 505.348V12.2578H543.618ZM909.516 12.2578C920.352 12.2579 930.181 16.5616 937.395 23.5498C944.608 16.5612 954.438 12.2579 965.274 12.2578H1156.93C1186.76 12.2579 1210.95 36.4408 1210.95 66.2715V505.348C1210.95 535.178 1186.76 559.361 1156.93 559.361H1082.01V156.874C1082.01 148.214 1074.99 141.193 1066.33 141.193H967.014V221.342H1001.86V559.361H872.926V156.874C872.926 148.214 865.905 141.193 857.244 141.193H792.776V385.299H663.842V12.2578H909.516Z" fill="#000"/><path d="M466.954 0H1198.75V529.68C1198.75 552.774 1180.03 571.496 1156.93 571.496H508.771C485.676 571.496 466.954 552.774 466.954 529.68V0Z" fill="none" stroke="#000" stroke-width="56"/></mask></defs><g class="n41g"><path class="n41" d="M466.954 0H1198.75V529.68C1198.75 552.774 1180.03 571.496 1156.93 571.496H508.771C485.676 571.496 466.954 552.774 466.954 529.68V0Z" fill="#fff" mask="url(#m41)"/></g></svg></div>
       <div>
         <div class="eyebrow">A marca LM41</div>
         <h4>Iniciais com asas.<br><span class="neon">E o 41 escondido.</span></h4>
@@ -923,7 +1030,7 @@ nav.scrolled .logo{font-size:17px}
       <div class="pics">
         <img src="media/fotos/capacete-mao.jpg" alt="Capacete branco com faixas verdes">
         <img src="media/fotos/kart-topo.jpg" alt="Kart 41 visto de cima">
-        <img src="media/fotos/pista-panning.jpg" alt="Lucas em velocidade">
+        <img src="media/fotos/pista-panning.jpg" alt="Lucas em velocidade" style="object-position:96% 40%">
       </div>
     </div>
 
@@ -942,7 +1049,7 @@ nav.scrolled .logo{font-size:17px}
       <div class="shelf-floor"></div>
       <div class="shelf-info" id="shelfInfo" aria-live="polite"></div>
     </div>
-    <p class="shelf-hint reveal">Passe o mouse para ver os detalhes. Clique no troféu para ir ao momento na linha do tempo.</p>
+    <p class="shelf-hint reveal">Passe o mouse ou toque para ver os detalhes · arraste para os lados · clique (ou toque de novo) para ir ao momento.</p>
     <div class="tcount reveal">
       <div><div class="v">30+</div><div class="l">Troféus</div></div>
       <div><div class="v" id="cTit">–</div><div class="l">Títulos</div></div>
@@ -1200,7 +1307,7 @@ nav.scrolled .logo{font-size:17px}
 
 <div class="lb" id="lb">
   <button class="close" id="lbClose" aria-label="Fechar"><svg class="fa" aria-hidden="true" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
-  <div class="lbprog" id="lbProg" aria-hidden="true"><div class="pbar"></div></div><i id="lbBar" hidden></i><div class="lbzoom" id="lbZoom"><button data-z="-1" aria-label="Diminuir zoom">−</button><span id="lbZv">100%</span><button data-z="1" aria-label="Aumentar zoom">+</button><button data-z="0" aria-label="Ajustar à tela" class="fit">⤢</button></div><button class="lbplay" id="lbPlay" aria-label="Pausar/retomar">❚❚ Pausar</button>
+  <div class="lbprog" id="lbProg" aria-hidden="true"><div class="pbar"></div></div><i id="lbBar" hidden></i><div class="lbzoom" id="lbZoom"><button data-z="-1" aria-label="Diminuir zoom">−</button><span id="lbZv">100%</span><button data-z="1" aria-label="Aumentar zoom">+</button><button data-z="0" aria-label="Ajustar à tela" class="fit">⤢</button></div><button class="lbsnd" id="lbSnd" hidden aria-label="Ativar som"></button><button class="lbplay" id="lbPlay" aria-label="Pausar/retomar">❚❚ Pausar</button>
   <div class="stage"><button class="navb prev" id="lbPrev" aria-label="Anterior"><svg class="fa" aria-hidden="true" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg></button><div id="lbMedia" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center"></div><button class="navb next" id="lbNext" aria-label="Próxima"><svg class="fa" aria-hidden="true" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg></button></div>
   <div class="cap" id="lbCap"></div>
   <div class="thumbs" id="lbThumbs"></div>
@@ -1267,7 +1374,7 @@ const CONQUISTAS = [
   { k:"2025-10-04", data:"04 Out/2025", tipo:"vitoria", resultado:"P1", pole:true,
     campeonato:"Campeonato Tocantinense de Kart", etapa:"3ª etapa", categoria:"Mirim", local:"Kartódromo de Palmas (TO)",
     relato:"Já com Silvano Júnior no comando dos treinos, mais uma pole e mais uma vitória rumo ao título estadual.", fotos:["media/tl/ctk3-1.jpg","media/tl/ctk3-2.jpg","media/tl/ctk3-3.jpg","media/tl/ctk3-4.jpg","media/tl/ctk3-5.jpg"] },
-  { k:"2025-08-01", data:"2º sem/2025", tipo:"marco", resultado:"Nova fase",
+  { mark:"plus", k:"2025-08-01", data:"2º sem/2025", tipo:"marco", resultado:"Nova fase",
     campeonato:"Chegada de Silvano Júnior", etapa:"Preparação", categoria:"Mirim", local:"Palmas (TO)",
     relato:"Mais carga de treino e evolução técnica. De cerca de 20 segundos atrás dos cadetes para a frente deles no fim da temporada.", fotos:["media/fotos/grid-equipe.jpg","media/tl/silvano-1.jpg","media/tl/silvano-2.jpg","media/tl/silvano-3.jpg","media/tl/silvano-4.jpg","media/tl/silvano-5.jpg","media/tl/silvano-6.jpg"] },
   { k:"2025-08-09", data:"09 Ago/2025", tipo:"vitoria", resultado:"P1", pole:true,
@@ -1285,9 +1392,20 @@ const CONQUISTAS = [
   { k:"2025-03-08", data:"08 Mar/2025", tipo:"podio", resultado:"P2", pole:true,
     campeonato:"Copa Palmas de Kart", etapa:"1ª etapa", categoria:"Mirim", local:"Kartódromo de Palmas (TO)",
     relato:"A primeira corrida oficial, dois meses depois de entrar num kart pela primeira vez: pole position e 2º lugar.", fotos:["media/tl/cp1-1.jpg","media/tl/cp1-2.jpg","media/tl/cp1-3.jpg"] },
-  { k:"2025-01-04", data:"Jan/2025", tipo:"marco", resultado:"Primeira volta",
+  { mark:"play", k:"2025-01-04", data:"Jan/2025", tipo:"marco", resultado:"Primeira volta",
     campeonato:"O começo de tudo", etapa:"Primeiro treino", categoria:"Mirim", local:"Kartódromo de Palmas (TO)",
-    relato:"No primeiro sábado de janeiro, a primeira experiência num kart. Depois de algumas voltas acompanhadas, o pedido: andar sozinho.", fotos:[] }
+    relato:"No primeiro sábado de janeiro, a primeira experiência num kart: o do amigo Joaquim Andrade, com o pai dele, Josimar (Mazinho), guiando o Lucas pela corda de segurança. Depois de algumas voltas acompanhadas, o pedido: andar sozinho.", pos:"50% 30%", fotos:["media/tl/inicio-2.jpg"],
+    midia:[{src:"media/tl/inicio-1.jpg",leg:"Sentado no kart do amigo Joaquim Andrade, as primeiras instruções sobre freio e acelerador."},
+      {video:"media/tl/inicio-v5.mp4",poster:"media/tl/inicio-v5.jpg",leg:"O start: Josimar Andrade (Mazinho) empresta o kart do filho e guia o Lucas pela corda de segurança."},
+      {video:"media/tl/inicio-v1.mp4",poster:"media/tl/inicio-v1.jpg",leg:"O pedido: andar sozinho na pista, sem ninguém segurando."},
+      {video:"media/tl/inicio-v2.mp4",poster:"media/tl/inicio-v2.jpg",leg:"Primeiro treino, com as primeiras instruções de Misael Machado."},
+      {video:"media/tl/inicio-v3.mp4",poster:"media/tl/inicio-v3.jpg",leg:"A empolgação depois do primeiro treino."},
+      {src:"media/tl/inicio-2.jpg",leg:"Já de macacão, pronto para a próxima volta."},
+      {video:"media/tl/inicio-v4.mp4",poster:"media/tl/inicio-v4.jpg",leg:"Raphael Lima acompanhando a evolução dentro da pista."}] },
+  { mark:"ball", k:"2025-01-01", data:"Antes do kart", tipo:"marco", resultado:"Campeão e artilheiro",
+    campeonato:"Dos gramados para as pistas", etapa:"Futebol", categoria:"", local:"",
+    relato:"Antes de acelerar, Lucas passou pela natação e pelo tênis e encontrou no futebol o seu primeiro ambiente de competição: foi campeão e artilheiro. A garra dos gramados ele levou para as pistas.", pos:"50% 30%",
+    fotos:["media/tl/inicio-3.jpg"], midia:[{src:"media/tl/inicio-3.jpg",leg:"Lucas no futebol: campeão e artilheiro, antes de trocar a bola pelo volante."}] }
 ];
 
 /* GALERIA — fotos e vídeos (troque/adicione à vontade) */
@@ -1338,7 +1456,7 @@ const lb=document.getElementById('lb'),lbM=document.getElementById('lbMedia'),lb
 let LB={items:[],k:0,title:'',sub:''};
 var lbShow;lbShow=function(){const it=LB.items[LB.k];
   lbM.innerHTML=!it?ph('Book de fotos em breve'):it.video?`<video src="${it.video}" poster="${it.poster||''}" controls autoplay muted loop playsinline></video>`:`<img src="${it.src}" alt="">`;
-  lbC.innerHTML=(it&&it.cap)?it.cap:`<b>${LB.title}</b><span>${LB.sub}${LB.items.length>1?' · '+(LB.k+1)+' de '+LB.items.length:''}</span>`;lb.classList.toggle('trophy-mode',!!(it&&it.trophy));
+  lbC.classList.toggle('hasleg',!!(it&&it.leg));lbC.innerHTML=(it&&it.cap)?it.cap:`<b>${LB.title}</b><span>${LB.sub}${LB.items.length>1?' · '+(LB.k+1)+' de '+LB.items.length:''}</span>${it&&it.leg?`<em class="leg">${it.leg}</em>`:''}`;lb.classList.toggle('trophy-mode',!!(it&&it.trophy));lb.classList.toggle('vid',!!(it&&it.video));
   lbT.innerHTML=LB.items.length>1?LB.items.map((m,j)=>`<div class="${j===LB.k?'on':''}" style="background-image:url('${m.poster||m.src}')" data-j="${j}"></div>`).join(''):'';
   lbT.querySelectorAll('div').forEach(d=>d.onclick=()=>{LB.k=+d.dataset.j;lbShow()})}
 function openLB(items,k,title,sub){LB={items,k:k||0,title,sub,moment:null};lbShow();lb.classList.add('open')}
@@ -1381,7 +1499,7 @@ addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key
   document.getElementById('cTit').textContent=CONQUISTAS.filter(c=>c.tipo==='titulo').length;
   document.getElementById('cWin').textContent=CONQUISTAS.filter(c=>['vitoria','podio','top'].includes(c.tipo)).length;
   document.getElementById('cPole').textContent=CONQUISTAS.filter(c=>c.pole).length;
-  const items=c=>{const m=[];if(c.video)m.push({video:c.video,poster:c.poster});(c.fotos||[]).forEach(f=>m.push(c.tc?{src:f,trophy:1}:{src:f}));return m};
+  const items=c=>{if(c.midia)return c.midia.map(x=>typeof x==='string'?{src:x}:x);const m=[];if(c.video)m.push({video:c.video,poster:c.poster});(c.fotos||[]).forEach(f=>m.push(c.tc?{src:f,trophy:1}:{src:f}));return m};
   /* sequência de momentos: do mais recente ao mais antigo; depois do primeiro (mais antigo) volta ao mais recente */
   const SEQ=CONQUISTAS.map((c,i)=>i).filter(i=>items(CONQUISTAS[i]).length).sort((a,b)=>CONQUISTAS[b].k.localeCompare(CONQUISTAS[a].k));
   window.openMoment=function(i){const c=CONQUISTAS[i];openLB(items(c),0,c.campeonato+' · '+c.etapa,c.data+' · '+c.local);LB.moment=i};
@@ -1393,10 +1511,13 @@ addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key
     list.sort((a,b)=>b.c.k.localeCompare(a.c.k));let yr='',side=0;
     tl.innerHTML=list.map(({c,i})=>{const m=items(c);const y=c.k.slice(0,4);let head='';if(y!==yr){yr=y;side=0;const nY=list.filter(x=>x.c.k.startsWith(y)).length;head=`<div class="tyear reveal"><span>${y}</span><small>${nY} ${nY>1?'momentos':'momento'}</small></div>`}const sd=(side++%2)?'r':'l';
       const cover=c.live?`<div class="lockbook"><div class="lbgrid">${['media/tl/nb-2.jpg','media/tl/sp3-2.jpg','media/tl/itu-2.jpg','media/tl/sm-2.jpg','media/tl/ctk4-2.jpg','media/tl/cp4-2.jpg'].map(f=>`<img src="${f}" alt="" loading="lazy">`).join('')}</div><div class="lkmsg"><span class="lki"><svg class=\"fa\" aria-hidden=\"true\" viewBox=\"0 0 448 512\"><path d=\"M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z\"/></svg></span><b>Book reservado para apoiadores</b><small>Bastidores e fotos dos próximos momentos</small></div></div>`:c.fotos&&c.fotos[0]?`<img src="${c.fotos[0]}" alt="${c.campeonato}" loading="lazy"${c.tc?' class="tcov"':''} style="${c.pos?`object-position:${c.pos}`:''}">`:c.video?`<video src="${c.video}" poster="${c.poster||''}" muted loop playsinline autoplay></video>`:ph(c.tipo==='marco'?'Foto do momento':'Foto do troféu');
-      return head+`<div class="titem ${sd} reveal ${c.tipo==='marco'?'marco':''}${c.live?' live':''}"><div class="date">${c.live?'<span class="livetag"><i></i>Na pista, fazendo história<span class="dots"><b>.</b><b>.</b><b>.</b></span></span>':c.data}</div><div class="tcard">
+      return head+`<div class="titem ${sd} reveal ${c.tipo==='marco'?'marco':''}${c.live?' live':''}${c.mark?' plus mk-'+c.mark:''}"><div class="date">${c.live?'<span class="livetag"><i></i>Na pista, fazendo história<span class="dots"><b>.</b><b>.</b><b>.</b></span></span>':c.data}</div><div class="tcard">
         <div class="mbox" data-i="${i}">${cover}${c.live?'':`<span class="more">${FA.camera}${c.tc?'Troféus · '+m.length:m.length?'Book · '+m.length:'Book em breve'}</span>`}</div>
         <div class="body"><div class="badges"><span class="bdg ${c.tipo}">${c.live?'<i class="ldot"></i>':icon[c.tipo]||''}${c.resultado}</span>${c.pole?`<span class="bdg pole">${FA.bolt}Pole</span>`:''}</div>
-        <h3>${c.campeonato}</h3><div class="meta">${c.etapa} · ${c.categoria} · ${FA.pin}${c.local}</div><p>${c.relato}</p>${c.frase?`<p class="frase" style="font-family:var(--cond);font-size:20px;color:#fff;margin-top:12px">"${c.frase}"</p>`:''}${c.live?`<a class="livecta" href="#patrocinio">Quero fazer parte dos próximos capítulos <span aria-hidden="true">→</span></a>`:''}${c.fonte?`<a href="${c.fonte.u}" style="display:inline-block;margin-top:12px;font-size:14px;font-weight:600;color:var(--neon)">Ler no ${c.fonte.t} ${FA.ext}</a>`:''}</div></div></div>`}).join('');
+        <h3>${c.campeonato}</h3><div class="meta">${[c.etapa,c.categoria].filter(Boolean).join(' · ')}${c.local?` · ${FA.pin}${c.local}`:''}</div><p>${c.relato}</p>${c.frase?`<p class="frase" style="font-family:var(--cond);font-size:20px;color:#fff;margin-top:12px">"${c.frase}"</p>`:''}${c.live?`<a class="livecta" href="#patrocinio">Quero fazer parte dos próximos capítulos <span aria-hidden="true">→</span></a>`:''}${c.fonte?`<a href="${c.fonte.u}" style="display:inline-block;margin-top:12px;font-size:14px;font-weight:600;color:var(--neon)">Ler no ${c.fonte.t} ${FA.ext}</a>`:''}</div></div></div>`}).join('');
+    { const yi=yrs.indexOf(curYear),py=yrs[yi+1];if(py&&f==='all'){const n=CONQUISTAS.filter(c=>c.k.startsWith(py)).length;
+      tl.insertAdjacentHTML('beforeend',`<div class="tl-prev reveal"><button type="button" data-y="${py}"><small>Continua em</small>${py}<small>${n} momentos</small></button></div>`);
+      tl.querySelector('.tl-prev button').onclick=()=>{const b=yb.querySelector(`button[data-y="${py}"]`);if(b)b.click();const top=document.getElementById('years').getBoundingClientRect().top+scrollY-110;scrollTo({top,behavior:'smooth'})}}}
     watch(tl);if(window.decorateTimeline)decorateTimeline();
     tl.querySelectorAll('.mbox').forEach(el=>el.onclick=()=>{if(CONQUISTAS[+el.dataset.i].live){document.getElementById('patrocinio').scrollIntoView({behavior:'smooth'});return}const c=CONQUISTAS[+el.dataset.i];openMoment(+el.dataset.i)});
   }
@@ -1430,6 +1551,61 @@ document.querySelectorAll('#spTabs button').forEach(b=>b.onclick=()=>{document.q
 renderSP('rookie');
 
 
+
+/* idade calculada automaticamente */
+document.querySelectorAll('.idade[data-nasc]').forEach(el=>{const [y,m,d]=el.dataset.nasc.split('-').map(Number),n=new Date();let a=n.getFullYear()-y;if(n.getMonth()+1<m||(n.getMonth()+1===m&&n.getDate()<d))a--;el.textContent=a});
+
+
+/* logo LM41: digitação (L, M trocando fontes → apaga → 4, 1) e depois a montagem da logo; clique repete */
+(function(){const l=document.querySelector('.lmanim');if(!l)return;
+  const wrap=document.createElement('div');wrap.className='lmwrap';l.parentNode.insertBefore(wrap,l);wrap.appendChild(l);
+  const ov=document.createElement('div');ov.className='lmtype';ov.setAttribute('aria-hidden','true');ov.innerHTML='<span class="tx"></span><i class="cur"></i>';wrap.appendChild(ov);
+  const tx=ov.querySelector('.tx'),FONTS=['Georgia,serif','"Courier New",monospace','Inter,sans-serif','"Barlow Condensed",sans-serif','Anton,sans-serif'];
+  const sl=ms=>new Promise(r=>setTimeout(r,ms));let run=0,busyUntil=0;
+  /* ajusta tamanho e ponto inicial do texto: o cursor parte da esquerda e o texto final fica centralizado */
+  function fit(t,k){const W=wrap.clientWidth,mz=document.createElement('b');mz.textContent=t;mz.style.cssText='font-family:Anton,sans-serif;position:absolute;visibility:hidden;white-space:nowrap';ov.appendChild(mz);
+    let fs=k?W*k:W*.2;ov.style.fontSize=fs+'px';if(!k){fs=fs*(W*.9)/mz.offsetWidth;ov.style.fontSize=fs+'px'}
+    ov.style.paddingLeft=Math.max(0,(W-mz.offsetWidth)/2)+'px';mz.remove()}
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const logo=()=>{busyUntil=Date.now()+6200;ov.classList.remove('on');l.classList.remove('hide','go');void l.getBoundingClientRect();l.classList.add('go')};
+  /* digita a palavra letra a letra (Anton) e depois troca as fontes da palavra inteira */
+  async function typeWord(w,cls,id){const bs=[];for(const ch of w){if(id!==run)return;const s=document.createElement('b');s.className=cls;s.textContent=ch;s.style.fontFamily=FONTS[0];tx.appendChild(s);await sl(30);s.classList.add('in');bs.push(s);await sl(420)}
+    await sl(450);for(const f of FONTS.slice(1)){if(id!==run)return;bs.forEach(b=>b.classList.add('sw'));await sl(110);bs.forEach(b=>{b.style.fontFamily=f;b.classList.remove('sw')});await sl(420)}}
+  async function play(){const id=++run;busyUntil=Date.now()+40000;if(reduce){logo();return}
+    l.classList.remove('go');l.classList.add('hide');tx.innerHTML='';ov.style.fontSize=(wrap.clientWidth*.22)+'px';ov.classList.add('on');
+    await sl(700);if(id!==run)return;
+    /* nome em duas linhas: Lucas (tamanho do LM) e Menegetti embaixo, ajustado à largura */
+    const W=wrap.clientWidth,cur=ov.querySelector('.cur'),box=document.createElement('div');box.className='nmbox';ov.insertBefore(box,tx);
+    const L1=document.createElement('div'),L2=document.createElement('div');L1.className='nl';L2.className='nl';box.append(L1,L2);
+    const meas=(t,fs)=>{const m=document.createElement('b');m.textContent=t;m.style.cssText='font-family:Anton,sans-serif;position:absolute;visibility:hidden;white-space:nowrap;font-size:'+fs+'px';ov.appendChild(m);const w=m.offsetWidth;m.remove();return w};
+    const f1=W*.22,w1=meas('Lucas',f1);let f2=f1,w2=meas('Menegetti',f2);if(w2>W*.88){f2=f2*W*.88/w2;w2=meas('Menegetti',f2)}
+    L1.style.fontSize=f1+'px';L2.style.fontSize=f2+'px';ov.style.paddingLeft=Math.max(0,(W-Math.max(w1,w2))/2)+'px';tx.style.display='none';
+    const typeLine=async(L,t)=>{L.appendChild(cur);for(const ch of t){if(id!==run)return;const b=document.createElement('b');b.className='nm';b.textContent=ch;L.insertBefore(b,cur);await sl(20);b.classList.add('in');await sl(110)}};
+    await typeLine(L1,'Lucas');await sl(300);await typeLine(L2,'Menegetti');await sl(1400);if(id!==run)return;
+    for(const L of [L2,L1]){L.appendChild(cur);while(L.querySelector('b')){const bs=L.querySelectorAll('b');bs[bs.length-1].remove();await sl(55);if(id!==run)return}await sl(150)}
+    box.remove();ov.appendChild(cur);tx.style.display='';
+    await sl(350);fit('LM',.22);await sl(250);if(id!==run)return;
+    await typeWord('LM','g',id);await sl(900);if(id!==run)return;
+    logo()}
+  new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){play();o.disconnect()}}),{threshold:.5}).observe(wrap);
+  wrap.addEventListener('click',play);wrap.addEventListener('mouseenter',()=>{if(Date.now()>busyUntil)play()})})();
+
+
+/* som dos vídeos: começam mudos; o botão liga/desliga e a escolha vale para os próximos vídeos */
+(function(){const b=document.getElementById('lbSnd');let on=false;
+  const OFF='<svg viewBox="0 0 576 512"><path d="M301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3zM425 167l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg>';
+  const ON='<svg viewBox="0 0 640 512"><path d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/></svg>';
+  const paint=()=>{b.classList.toggle('on',on);b.innerHTML=(on?ON+'Som ligado':OFF+'Ativar som');b.setAttribute('aria-label',on?'Desligar som':'Ativar som')};
+  const sync=()=>{const v=lbM.querySelector('video');b.hidden=!v;if(v){v.muted=!on;if(on)v.volume=1}paint()};
+  b.addEventListener('click',e=>{e.stopPropagation();on=!on;sync();const v=lbM.querySelector('video');if(v&&v.paused)v.play().catch(()=>{})});
+  new MutationObserver(sync).observe(lbM,{childList:true});sync()})();
+
+
+/* a linha do tempo termina no marcador do último momento (nada abaixo da bola) */
+(function(){const tl=document.getElementById('timeline');if(!tl)return;
+  const fit=()=>{const pv=tl.querySelector('.tl-prev');if(pv){tl.style.setProperty('--tlEnd',Math.max(0,tl.clientHeight-(pv.offsetTop+pv.offsetHeight/2))+'px');return}const its=tl.querySelectorAll('.titem');const l=its[its.length-1];if(!l)return;tl.style.setProperty('--tlEnd',Math.max(0,tl.clientHeight-(l.offsetTop+20))+'px')};
+  new ResizeObserver(fit).observe(tl);new MutationObserver(fit).observe(tl,{childList:true});fit()})();
+
 /* bandeirada */
 (function(){const fb=document.getElementById('flagband');if(!fb)return;
   function build(){const n=Math.ceil(innerWidth/18)+2;fb.innerHTML=Array.from({length:n},(_,i)=>`<i style="animation-delay:${(-i*0.07).toFixed(2)}s"></i>`).join('')}
@@ -1451,23 +1627,46 @@ const MESES=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","
       etapa:[et?et.replace('etapa','')+'ª etapa':champ?'Campeonato':'',cat].filter(Boolean).join(' · ')||'Campeonato',res:medal?(pos?'Medalha · '+pos+'º lugar':'Medalha de participação'):champ?'Campeão':pole?'Pole position':pos?pos+'º lugar':last,cat,medal,
       tag:champ?'CAMPEÃO':pole?'P':medal&&!pos?'MEDALHA':pos?pos+'º':'',data:MESES[+mm-1]+'/'+yy}};
   const list=TROFEUS.map(parse).sort((a,b)=>a.key.localeCompare(b.key));
+  /* na sala, agrupa por competição (na ordem da 1ª conquista de cada uma) para o trilho marcar cada campeonato */
+  const firstK={};list.forEach(t=>{if(!(t.camp in firstK))firstK[t.camp]=t.key});
+  const SHELF=[...list].sort((a,b)=>firstK[a.camp].localeCompare(firstK[b.camp])||a.key.localeCompare(b.key));
   const norm=x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   function momentFor(t){const ym=t.f.slice(3,7)+'-'+t.f.slice(0,2),name=norm(t.camp.replace(/ \d{4}$/,'')).replace(/^(copa|campeonato) /,'').split(' ').filter(w=>w.length>3&&!['kart','light'].includes(w)||w==='light');
     let best=-1;CONQUISTAS.forEach((c,i)=>{if(best>=0)return;const cn=norm(c.campeonato);if(c.k.startsWith(ym)&&name.some(w=>cn.includes(w)))best=i});return best}
   const tr=document.getElementById('shelfTrack'),shelf=document.getElementById('shelf'),info=document.getElementById('shelfInfo');
-  const html=list.map((t,i)=>`<button class="trophy ${t.champ?'champ':''}" data-i="${i}" aria-label="${t.res} · ${t.camp} · ${t.etapa} · ${t.data}"><img src="media/trofeus/${t.f}.webp" alt="" loading="lazy"><span class="tag">${t.tag}</span></button>`).join('');
-  tr.innerHTML=html+html.replace(/<button /g,'<button tabindex="-1" aria-hidden="true" ');
+  /* trilho mecânico: um segmento por competição, com etiqueta no início */
+  const RCOL=['#39FF14','#FFFFFF'],ci={};let nc=0;
+  const SHORT=c=>c.replace(/^(\d+[ºª] )?(Campeonato|Copa) /,m=>/Copa/.test(m)?'Copa ':'').replace(' de Kart','').replace('São Paulo','SP').replace('Brasileiro de Endurance','Brasileiro Endurance');
+  const ng=new Set(SHELF.map(t=>t.camp)).size;const build=off=>{const ci={};let nc=off;return SHELF.map((t,i)=>{const c=ci[t.camp]??(ci[t.camp]=RCOL[nc++%RCOL.length]),first=i===0||SHELF[i-1].camp!==t.camp,last=i===SHELF.length-1||SHELF[i+1].camp!==t.camp;
+    return `<button class="trophy ${t.champ?'champ':''}" data-i="${i}" aria-label="${t.res} · ${t.camp} · ${t.etapa} · ${t.data}"><img src="media/trofeus/${t.f}.webp" alt="" loading="lazy" draggable="false"><span class="tag">${t.tag}</span><i class="rl${first?' rs':''}${last?' re':''}" style="--c:${c}" aria-hidden="true">${first?`<em>${SHORT(t.camp)}</em>`:''}</i></button>`}).join('');};const html=build(0);
+  tr.innerHTML=html+build(0).replace(/<button /g,'<button tabindex="-1" aria-hidden="true" ');
   let pinned=null;
-  const show=el=>{const t=list[+el.dataset.i];info.innerHTML=`<b>${t.camp}</b><span class="r">${t.res}</span><small>${t.etapa} · ${t.data}</small>`;info.classList.add('show');shelf.classList.add('paused')};
+  const show=el=>{const t=SHELF[+el.dataset.i];info.innerHTML=`<b>${t.camp}</b><span class="r">${t.res}</span><small>${t.etapa} · ${t.data}</small>`;info.classList.add('show');shelf.classList.add('paused')};
   const hide=()=>{if(pinned)return;info.classList.remove('show');shelf.classList.remove('paused')};
   tr.querySelectorAll('.trophy').forEach(el=>{
     el.addEventListener('mouseenter',()=>{if(!pinned)show(el)});el.addEventListener('mouseleave',hide);el.addEventListener('focus',()=>show(el));el.addEventListener('blur',hide);
-    el.addEventListener('click',e=>{e.stopPropagation();const t=list[+el.dataset.i];const i=momentFor(t);
+    el.addEventListener('click',e=>{e.stopPropagation();if(SH.dragged){SH.dragged=false;return}
+      if(SH.touch&&pinned!==el){if(pinned)pinned.classList.remove('on');pinned=el;el.classList.add('on');show(el);return}
+      const t=SHELF[+el.dataset.i];const i=momentFor(t);
       if(i<0){if(pinned)pinned.classList.remove('on');pinned=el;el.classList.add('on');show(el);return}
       if(pinned){pinned.classList.remove('on');pinned=null}hide();gotoMoment(i)})});
   document.addEventListener('click',()=>{if(pinned){pinned.classList.remove('on');pinned=null;hide()}});
 
   const shelfShow=show;
+  /* movimento do carrossel em JS: anda sozinho, arrasta com o dedo ou o mouse, toque/clique abrem */
+  const SH=window.SH={pos:0,dragged:false,touch:false,drag:null,resumeAt:0};
+  let half=0,last=performance.now();const measure=()=>{half=tr.scrollWidth/2;if(!SH.pos)SH.pos=-half;
+    tr.querySelectorAll('.rl.rs').forEach(r=>{let b=r.parentElement,e=b;while(e.nextElementSibling&&!e.querySelector('.rl.re'))e=e.nextElementSibling;const w=e.offsetLeft+e.offsetWidth-b.offsetLeft;r.querySelector('em').style.width=Math.max(60,w-14)+'px'})};measure();addEventListener('resize',measure);addEventListener('load',measure);
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wrapP=()=>{if(!half)return;while(SH.pos>=0)SH.pos-=half;while(SH.pos<-half)SH.pos+=half};
+  (function tick(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+    if(!RM&&!SH.drag&&!shelf.classList.contains('paused')&&now>SH.resumeAt)SH.pos+=half/60*dt;
+    wrapP();tr.style.transform=`translateX(${SH.pos}px)`;requestAnimationFrame(tick)})(last);
+  SH.set=p=>{SH.pos=p;wrapP()};
+  shelf.addEventListener('pointerdown',e=>{SH.touch=e.pointerType!=='mouse';SH.drag={x:e.clientX,p:SH.pos,moved:false,id:e.pointerId}});
+  shelf.addEventListener('pointermove',e=>{const d=SH.drag;if(!d)return;const dx=e.clientX-d.x;if(!d.moved&&Math.abs(dx)>6){d.moved=true;shelf.setPointerCapture(d.id);shelf.classList.add('dragging')}if(d.moved){SH.pos=d.p+dx;wrapP()}});
+  const up=()=>{const d=SH.drag;SH.drag=null;shelf.classList.remove('dragging');if(d&&d.moved){SH.dragged=true;SH.resumeAt=performance.now()+2500;setTimeout(()=>SH.dragged=false,60)}};
+  shelf.addEventListener('pointerup',up);shelf.addEventListener('pointercancel',up);
   /* silhuetas dos troféus na linha do tempo, abaixo do losango de cada momento */
   const TL_T=list.map(t=>({t,m:momentFor(t)})).filter(x=>x.m>=0);
   window.decorateTimeline=function(){document.querySelectorAll('#timeline .titem').forEach(it=>{
@@ -1504,7 +1703,7 @@ const MESES=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","
           const cands=[...tr.querySelectorAll('.trophy')].filter(b=>b.querySelector('img').getAttribute('src').includes(el.dataset.k));
           let best=null;cands.forEach(b=>{const p=1+(sw/2-(b.offsetLeft+b.offsetWidth/2))/half;if(p>=0&&p<=1&&!best)best={b,p}});
           if(!best)return;if(pinned){pinned.classList.remove('on');pinned=null}
-          tr.style.animation='none';void tr.offsetWidth;tr.style.animation='';tr.style.animationDelay=(-best.p*60)+'s';
+          SH.set(-half*(1-best.p));SH.resumeAt=performance.now()+4000;
           pinned=best.b;best.b.classList.add('on');shelfShow(best.b)},900)})});
     document.addEventListener('click',()=>{if(pin){pin.classList.remove('on');pin=null;hide()}});
   })();
