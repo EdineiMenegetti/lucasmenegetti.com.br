@@ -833,6 +833,14 @@ nav.scrolled .logo{font-size:17px}
 .tl-prev button small{font-family:Inter,sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .tl-prev button:hover{background:var(--neon);color:var(--dark)}.tl-prev button:hover small{color:var(--dark)}
 @media (max-width:980px){.tl-prev{justify-content:flex-start;padding-left:0}.tl-prev button{padding:8px 18px;font-size:22px;margin-left:-14px}}
+
+/* marcadores exatamente centrados na linha */
+.tl .titem.l::before{left:calc(100% - 11px);right:auto}.tl .titem.r::before{left:-11px;right:auto}
+.tl .titem.plus::before{margin:-5px 0 0 0}
+.tl .titem.plus.l::before{left:calc(100% - 16px);right:auto}.tl .titem.plus.r::before{left:-16px;right:auto}
+.tl .titem.plus.l::after{left:calc(100% - 14px);right:auto}.tl .titem.plus.r::after{left:-14px;right:auto}
+.tl::before{top:var(--tlStart,0px)}
+@media (max-width:980px){.tl .titem.l::before,.tl .titem.r::before{left:-3px}.tl .titem.plus.l::before,.tl .titem.plus.r::before{left:-8px}.tl .titem.plus.l::after,.tl .titem.plus.r::after{left:-6px}}
 /* momento ao vivo */
 .livetag .dots{display:inline-flex;margin-left:1px}
 .livetag .dots b{animation:ldots 1.4s infinite;opacity:0}
@@ -1404,8 +1412,16 @@ const CONQUISTAS = [
       {video:"media/tl/inicio-v4.mp4",poster:"media/tl/inicio-v4.jpg",leg:"Raphael Lima acompanhando a evolução dentro da pista."}] },
   { mark:"ball", k:"2025-01-01", data:"Antes do kart", tipo:"marco", resultado:"Campeão e artilheiro",
     campeonato:"Dos gramados para as pistas", etapa:"Futebol", categoria:"", local:"",
-    relato:"Antes de acelerar, Lucas passou pela natação e pelo tênis e encontrou no futebol o seu primeiro ambiente de competição: foi campeão e artilheiro. A garra dos gramados ele levou para as pistas.", pos:"50% 30%",
-    fotos:["media/tl/inicio-3.jpg"], midia:[{src:"media/tl/inicio-3.jpg",leg:"Lucas no futebol: campeão e artilheiro, antes de trocar a bola pelo volante."}] }
+    relato:"Antes de acelerar, Lucas passou pela natação e pelo tênis e encontrou no futebol o seu primeiro ambiente de competição: foi campeão e artilheiro. A garra dos gramados ele levou para as pistas.", pos:"50% 35%",
+    fotos:["media/tl/fut-3.jpg"], midia:[
+      {src:"media/tl/fut-1.jpg",leg:"Jun/2024: dia de jogo, ao lado do painel dos ídolos."},
+      {src:"media/tl/fut-2.jpg",leg:"Camisa listrada e chuteira calçada: o futebol foi o primeiro palco."},
+      {video:"media/tl/fut-v1.mp4",poster:"media/tl/fut-v1.jpg",leg:"Entrando em campo pelo túnel."},
+      {video:"media/tl/fut-v2.mp4",poster:"media/tl/fut-v2.jpg",leg:"Em quadra pela Escola Flamengo."},
+      {video:"media/tl/fut-v3.mp4",poster:"media/tl/fut-v3.jpg",leg:"Jogo da Copa Libertadores FLA."},
+      {src:"media/tl/fut-3.jpg",leg:"Campeão da Copa Libertadores FLA, com a taça e a medalha."},
+      {src:"media/tl/fut-4.jpg",leg:"A taça e a comemoração com o mascote."},
+      {src:"media/tl/inicio-3.jpg",leg:"Campeão e artilheiro, antes de trocar a bola pelo volante."}] }
 ];
 
 /* GALERIA — fotos e vídeos (troque/adicione à vontade) */
@@ -1516,7 +1532,7 @@ addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key
         <div class="body"><div class="badges"><span class="bdg ${c.tipo}">${c.live?'<i class="ldot"></i>':icon[c.tipo]||''}${c.resultado}</span>${c.pole?`<span class="bdg pole">${FA.bolt}Pole</span>`:''}</div>
         <h3>${c.campeonato}</h3><div class="meta">${[c.etapa,c.categoria].filter(Boolean).join(' · ')}${c.local?` · ${FA.pin}${c.local}`:''}</div><p>${c.relato}</p>${c.frase?`<p class="frase" style="font-family:var(--cond);font-size:20px;color:#fff;margin-top:12px">"${c.frase}"</p>`:''}${c.live?`<a class="livecta" href="#patrocinio">Quero fazer parte dos próximos capítulos <span aria-hidden="true">→</span></a>`:''}${c.fonte?`<a href="${c.fonte.u}" style="display:inline-block;margin-top:12px;font-size:14px;font-weight:600;color:var(--neon)">Ler no ${c.fonte.t} ${FA.ext}</a>`:''}</div></div></div>`}).join('');
     { const yi=yrs.indexOf(curYear),py=yrs[yi+1];if(py&&f==='all'){const n=CONQUISTAS.filter(c=>c.k.startsWith(py)).length;
-      tl.insertAdjacentHTML('beforeend',`<div class="tl-prev reveal"><button type="button" data-y="${py}"><small>Continua em</small>${py}<small>${n} momentos</small></button></div>`);
+      tl.insertAdjacentHTML('beforeend',`<div class="tl-prev reveal"><button type="button" data-y="${py}"><small>Continua em</small>${py}</button></div>`);
       tl.querySelector('.tl-prev button').onclick=()=>{const b=yb.querySelector(`button[data-y="${py}"]`);if(b)b.click();const top=document.getElementById('years').getBoundingClientRect().top+scrollY-110;scrollTo({top,behavior:'smooth'})}}}
     watch(tl);if(window.decorateTimeline)decorateTimeline();
     tl.querySelectorAll('.mbox').forEach(el=>el.onclick=()=>{if(CONQUISTAS[+el.dataset.i].live){document.getElementById('patrocinio').scrollIntoView({behavior:'smooth'});return}const c=CONQUISTAS[+el.dataset.i];openMoment(+el.dataset.i)});
@@ -1603,7 +1619,7 @@ document.querySelectorAll('.idade[data-nasc]').forEach(el=>{const [y,m,d]=el.dat
 
 /* a linha do tempo termina no marcador do último momento (nada abaixo da bola) */
 (function(){const tl=document.getElementById('timeline');if(!tl)return;
-  const fit=()=>{const pv=tl.querySelector('.tl-prev');if(pv){tl.style.setProperty('--tlEnd',Math.max(0,tl.clientHeight-(pv.offsetTop+pv.offsetHeight/2))+'px');return}const its=tl.querySelectorAll('.titem');const l=its[its.length-1];if(!l)return;tl.style.setProperty('--tlEnd',Math.max(0,tl.clientHeight-(l.offsetTop+20))+'px')};
+  const fit=()=>{const f0=tl.querySelector('.titem');if(f0)tl.style.setProperty('--tlStart',(f0.offsetTop+21)+'px');const pv=tl.querySelector('.tl-prev');if(pv){tl.style.setProperty('--tlEnd',Math.max(0,tl.clientHeight-(pv.offsetTop+pv.offsetHeight/2))+'px');return}const its=tl.querySelectorAll('.titem');const l=its[its.length-1];if(!l)return;tl.style.setProperty('--tlEnd',Math.max(0,tl.clientHeight-(l.offsetTop+20))+'px')};
   new ResizeObserver(fit).observe(tl);new MutationObserver(fit).observe(tl,{childList:true});fit()})();
 
 /* bandeirada */
